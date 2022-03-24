@@ -1,0 +1,6 @@
+venv/
+.env
+static
+__pycache__
+*.sqlite3
+*.json

@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+
+{% block body %}
+
+<style>
+  .username{
+    padding-left: 100%;
+  }
+  .username_2{
+    padding-left: 83%;
+  }
+  .static_nav{
+    position: fixed;
+  }
+  .container-login {
+    position: relative;
+    margin-left: 33.5%;
+    margin-top: 10%;
+    width: 30%;
+    height: 30%;
+    border-radius: 1.35em;
+    box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.548);
+  }
+</style>
+
+
+<div class="row justify-content-md-center container-login" style="margin-top: 5%; margin-left: 35%;">
+    <div class="col-md-8">
+        <img class="mb-1" style="margin-left: 35%; margin-top: 8%;" src="/media/images/profile-avatar-png-8.png" alt="" width="80" height="80">
+        <h1 class="text-center">Login</h1>
+        <form method="post" action="{% url 'login' %}">
+          {% csrf_token %}
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label"></label>
+            {{form.username}}
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-3 col-form-label"></label>
+            {{form.password}}
+          </div>
+          <button class="btn btn-block btn-primary" type="submit">Login</button>
+        </form>
+        <p class="col-sm-12 text-center">Don't have an account? <a class="text-info" href="{% url 'register' %}">Create an account.</a></p>
+    </div>
+</div>
+
+{% endblock body %}

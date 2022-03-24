@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+
+{% block body %}
+
+<style>
+.username{
+  padding-left: 100%;
+}
+.username_2{
+  padding-left: 83%;
+}
+.static_nav{
+  position: fixed;
+}
+.container-login {
+  position: relative;
+  margin-left: 33.5%;
+  margin-top: 10%;
+  width: 30%;
+  height: 30%;
+  border-radius: 1.35em;
+  box-shadow: 0 10px 15px 0 rgba(0, 0, 0, 0.548);
+}
+</style>
+
+<div class="container-login" style="margin-top: 5%; margin-left: 35%;">
+    <div class="row justify-content-md-center">
+        <div class="col-md-8">
+        <img class="mb-1" style="margin-left: 35%; margin-top: 5%;" src="/media/images/profile-avatar-png-8.png" alt="" width="80" height="80">
+        <h1 class="text-center">SignUp</h1>
+        <form method="post" action="{% url 'register' %}">
+          {% csrf_token %}
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label static_nav"></label>
+            {{form.username}}
+            {% if form.username.errors.as_text %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 4%;"> {{form.username.errors}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+            {% endif %}
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label static_nav"></label>
+            {{form.email}}
+            {% if form.email.errors.as_text %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 4%;"> {{form.email.errors}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+            {% endif %}
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label static_nav"></label>
+            {{form.password1}}
+            {% if form.password1.errors.as_text %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 4%;"> {{form.password1.errors}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+            {% endif %}
+          </div>
+          <div class="form-group row">
+            <label class="col-sm-4 col-form-label static_nav"></label>
+            {{form.password2}}
+            {% if form.password2.errors.as_text %}
+            <div class="alert alert-danger alert-dismissible fade show" role="alert" style="margin-top: 4%;"> {{form.password2.errors}}
+              <button type="button" class="close" data-dismiss="alert">&times;</button>
+            </div>
+            {% endif %}
+          </div>
+        <input name="next" type="hidden" value="{{next}}">
+        <button class="btn-block btn btn-primary" type="submit">Register</button>
+        </form>
+        <p class="col-sm-12 text-center">If you already have an account, <a class="text-info" href="{% url 'login' %}">login</a> instead.</p>
+        </div>
+    </div>
+</div>
+
+{% endblock body %}
