@@ -42,6 +42,8 @@ class RegistrationForm(UserCreationForm, forms.ModelForm):
 
 
 class UserForm(AuthenticationForm):
+	email = forms.CharField(widget=forms.TextInput(attrs={ "autofocus": True}))
+
 	password = forms.CharField(
         label=_("Password"),
         strip=False,
@@ -50,15 +52,29 @@ class UserForm(AuthenticationForm):
 
 	error_messages = {
         'invalid_login': _(
-            "Please enter a correct %(username)s and password. Note that both "
+            "Please enter a correct %(email)s and password. Note that both "
             "fields may be case-sensitive."
         ),
         'inactive': _("This account is inactive."),
     }
 	class Meta:
 		model = Account
-		fields = ('username', 'password')
+		fields = ('email', 'password')
 	def __init__(self, *args, **kwargs):
 		super(UserForm,self).__init__(*args,**kwargs)
-		self.fields['username'].widget.attrs.update({'class':'form-control','placeholder':'Username'})
+		self.fields.pop('username')
+		self.fields['email'].widget.attrs.update({'class':'form-control','placeholder':'Email or Username'})
 		self.fields['password'].widget.attrs.update({'class':'form-control','placeholder':'Password'})
+
+
+class LoginConfirmForm(forms.Form):
+
+	code = forms.IntegerField(
+		label=_("Input your code"),
+        widget=forms.NumberInput(),
+	)
+	field=('code')
+	
+	def __init__(self, *args, **kwargs):
+			super(LoginConfirmForm,self).__init__(*args,**kwargs)
+			self.fields['code'].widget.attrs.update({'class':'form-control','placeholder':'Code'})

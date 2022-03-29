@@ -1,9 +1,11 @@
 from django.db import models
 
 from apps.config.utils import create_shortened_url
+from apps.account.models import Account
 # Create your models here.
 
 class Shortener(models.Model):
+    user = models.ForeignKey(Account, null=True, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     times_followed = models.PositiveIntegerField(default=0)    
     long_url = models.URLField()

@@ -1,0 +1,110 @@
+{% extends 'base.html' %} 
+
+{% block body %}
+
+<style>
+.container-url {
+    position: relative;
+    margin-left: 1%;
+    width: 20%;
+    height: 50%;
+}
+.grid-container {
+    grid-template-columns: auto auto auto;
+    grid-template-rows: 80px 200px;
+    gap: 10px;
+    padding: 10px;
+}
+#customers {
+  font-family: Arial, Helvetica, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+#customers td, #customers th {
+  border: 1px solid #ddd;
+  padding: 8px;
+}
+
+#customers tr:nth-child(even){background-color: #f2f2f2;}
+
+#customers tr:hover {background-color: #ddd;}
+
+#customers th {
+  padding-top: 12px;
+  padding-bottom: 12px;
+  text-align: left;
+  background-color: #04AA6D;
+  color: white;
+}
+</style>
+
+
+<div class="container">
+    <div class="justify-content-md-center mr-5 mt-5">
+        <table id="customers">
+            <tr>
+              <th>Active links</th>
+              <th>From</th>
+              <th>Copy</th>
+              <th>Delete</th>
+            </tr>
+            {% for url in all_urls %}
+            <tr>
+                <td id="myInput"><a href="{% url 'redirect' shortened_part=url.short_url %}">{{domain}}/{{url.short_url}}</a></td>
+                <td>{{url.long_url}}</td>
+                <td><button class="otherButton btn-outline-primary">Copy</button></td>
+                <td><button class="btn btn-outline-primary" user="{{ user.id }}"  data-object-id="{{ url.id }}">Remove</button></td>
+            </tr>
+            {% endfor %}
+        </table>
+    </div>
+</div>
+
+
+<script>
+    var a = document.getElementsByClassName('otherButton');
+    
+    for (var i = 0; i < a.length; i++) {
+        a[i].addEventListener('click', function() {
+        var b = this.parentNode.parentNode.cells[0].textContent;
+        copyToClipboard(b);
+        alert(b);
+        });
+    }
+    
+    function copyToClipboard(text) {
+        var dummy = document.createElement("textarea");
+        document.body.appendChild(dummy);
+        dummy.value = text;
+        dummy.select();
+        document.execCommand("copy");
+        document.body.removeChild(dummy);
+    }
+</script>
+<script>
+    $('button').on('click', function(){
+    let confirmation = confirm("are you sure you want to remove the item?");
+    if (confirmation) {
+        let object_id = $(this).attr('data-object-id');
+        let user_id = $(this).attr('user');
+        $.ajax({
+        type: "POST",
+        url: `{% url 'delete' pk=9998 %}`.replace(9998, object_id),
+        data: { csrfmiddlewaretoken: "{{ csrf_token }}",   // < here 
+            state:"inactive" 
+            },
+        success: function(response) {
+            window.location=`{% url 'links' %}`;
+            },
+        error: function(error) {
+            console.log(error)
+            window.location.href =`{% url 'links' %}`;
+        }
+    })
+    }
+})
+</script>
+
+
+{% endblock body %}
