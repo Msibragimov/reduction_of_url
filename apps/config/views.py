@@ -9,7 +9,7 @@ from apps.config.forms import ShortenerForm
 # Create your views here.
 
 
-@login_required(login_url='register')
+@login_required(login_url='login')
 def home(request):
     context = {}
     context['form'] = ShortenerForm()
@@ -30,13 +30,11 @@ def home(request):
         context['errors'] = used_form.errors
         return render(request, 'urlshortener/home.html', context)
 
-
-@login_required(login_url='register')
+@login_required(login_url='login')
 def user_links(request):
     all_urls = Shortener.objects.filter(user=request.user)
     current_site = get_current_site(request)
     return render(request, 'urlshortener/user_urls.html', context={'domain': current_site, 'all_urls': all_urls})
-
 
 @login_required(login_url='login')
 def delete(request,pk):
@@ -46,7 +44,7 @@ def delete(request,pk):
             url.delete()
     return JsonResponse({"passed": True,})
 
-
+@login_required(login_url='login')
 def redirect_url_view(request, shortened_part):
     try:
         shortener = Shortener.objects.get(short_url=shortened_part)

@@ -1,0 +1,36 @@
+version: '3.4'
+
+services:
+  static_collector:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - app-volumes:/app
+    entrypoint: python
+    command: ["manage.py", "collectstatic"]
+
+  migrator:
+    build: .
+    env_file:
+      - .env
+    volumes:
+      - app-volumes:/app
+    entrypoint: python
+    command: ["manage.py", "migrate"]
+
+  web:
+    build: .
+    ports: [18000:18000]
+    volumes:
+      - app-volumes:/app
+    env_file:
+      - .env
+    entrypoint: python
+    command: ["manage.py", "runserver", "0.0.0.0:18000"]
+    depends_on:
+      - static_collector
+      - migrator
+
+volumes:
+  app-volumes:

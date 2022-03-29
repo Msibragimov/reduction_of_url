@@ -1,0 +1,10 @@
+venv/
+*.sqlite3
+*.json
+pycache
+staticfiles/
+.vscode/
+.env
+.gitignore
+Dockerfile
+docker-compose.yml
