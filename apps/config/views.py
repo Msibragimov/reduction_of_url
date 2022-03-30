@@ -32,7 +32,10 @@ def home(request):
 
 @login_required(login_url='login')
 def user_links(request):
-    all_urls = Shortener.objects.filter(user=request.user)
+    all_urls = None
+    
+    if Shortener.objects.filter(user=request.user).exists():
+        all_urls = Shortener.objects.filter(user=request.user)
     current_site = get_current_site(request)
     return render(request, 'urlshortener/user_urls.html', context={'domain': current_site, 'all_urls': all_urls})
 

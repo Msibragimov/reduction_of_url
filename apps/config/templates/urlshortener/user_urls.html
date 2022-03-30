@@ -42,6 +42,7 @@
 
 <div class="container">
     <div class="justify-content-md-center mr-5 mt-5">
+        {% if all_urls is not None %}
         <table id="customers">
             <tr>
               <th>Active links</th>
@@ -58,6 +59,9 @@
             </tr>
             {% endfor %}
         </table>
+        {% else %}
+        <div class="container"><h1 class="text-center">No URLS</h1></div>
+        {% endif %}
     </div>
 </div>
 
