@@ -32,8 +32,10 @@
   <div class="mx-auto text-center mt-5">
     <h2 class="text-danger">Your shortened Url</h2>
     <p>You can copy the Link below and share it with your friends</p>
-    <p class="">{{new_url}}</p>
-    <p><span class="text-danger">Previous URL:</span> {{long_url}}</p>
+    <div class="container">
+      <p class="card">{{new_url}}</p>
+      <p class="card"><span class="text-danger">Previous URL:</span> {{long_url}}</p>
+    </div>
   </div>
   {% endif %}
 </div>
