@@ -54,7 +54,7 @@
             <tr>
                 <td id="myInput"><a href="{% url 'redirect' shortened_part=url.short_url %}">{{domain}}/{{url.short_url}}</a></td>
                 <td>{{url.long_url}}</td>
-                <td><button class="otherButton btn-outline-primary">Copy</button></td>
+                <td><button class="otherButton btn btn-outline-primary">Copy</button></td>
                 <td><button class="btn btn-outline-primary" user="{{ user.id }}"  data-object-id="{{ url.id }}">Remove</button></td>
             </tr>
             {% endfor %}

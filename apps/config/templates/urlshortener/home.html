@@ -32,11 +32,37 @@
   <div class="mx-auto text-center mt-5">
     <h2 class="text-danger">Your shortened Url</h2>
     <p>You can copy the Link below and share it with your friends</p>
-    <div class="container">
-      <p class="card">{{new_url}}</p>
-      <p class="card"><span class="text-danger">Previous URL:</span> {{long_url}}</p>
+    <div class="badge card text-wrap" style="width: 30%; height: 10%;">
+      <!-- <button class="otherButton btn btn-outline-primary" style="margin-left: 75%;">copy</button> -->
+      <pre tabindex="0" class="chroma">
+        <code class="language-sh" data-lang="sh"><h4>{{new_url}}</h4></code>
+      </pre>
     </div>
+    <p><span class="text-danger">Previous URL:</span> {{long_url}}</p>
   </div>
   {% endif %}
 </div>
+<div style="margin-top: 22%;"></div>
+
+<script>
+  var a = document.getElementsByClassName('otherButton');
+  
+  for (var i = 0; i < a.length; i++) {
+      a[i].addEventListener('click', function() {
+      var b = this.parentNode.parentNode.cells[0].textContent;
+      copyToClipboard(b);
+      alert(b);
+      });
+  }
+  
+  function copyToClipboard(text) {
+      var dummy = document.createElement("textarea");
+      document.body.appendChild(dummy);
+      dummy.value = text;
+      dummy.select();
+      document.execCommand("copy");
+      document.body.removeChild(dummy);
+  }
+</script>
+
 {% endblock body %}
